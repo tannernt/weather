@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { actions } from 'react-native-navigation-redux-helpers';
+import SearchPage from './pages/SearchPage';
 import GenericPage from './pages/GenericPage';
 import * as routes from './ducks/routes';
 
@@ -55,7 +56,7 @@ class Navigator extends React.Component {
           page = <GenericPage name="DAY"/>;
           break;
         default:
-          page = <GenericPage name="HOME"/>;
+          page = <SearchPage name="HOME"/>;
           break;
       }
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
+  Form,
+  Input,
   TouchableHighlight,
   Text,
   View,
@@ -10,10 +12,9 @@ import * as routes from '../ducks/routes';
 import { getCityForecast } from '../ducks/weather';
 import Style from '../lib/style';
 
-
 const { pushRoute } = actions;
 
-class GenericPage extends React.Component {
+class SearchPage extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.weather.selectedCity || nextProps.weather.selectedCity) {
       this.props.dispatch(pushRoute({
@@ -30,9 +31,10 @@ class GenericPage extends React.Component {
     };
   }
 
-  getForecast() {
+  getForecast(search = 'colorado springs') {
+    console.log(search);
     return () => {
-      this.props.dispatch(getCityForecast('colorado springs'));
+      this.props.dispatch(getCityForecast(search));
     };
   }
 
@@ -61,21 +63,25 @@ class GenericPage extends React.Component {
       <View style={Style.container}>
         <View style={Style.header}>
           <Text style={Style.title}>{this.props.name}</Text>
-          <Text>Generic Page</Text>
+          <Text>Search Page</Text>
         </View>
-        <TouchableHighlight
-          onPress={this.gotoPage()}
-        >
-          <Text>GO TO ROUTE</Text>
-        </TouchableHighlight>
+          <TouchableHighlight
+            onPress={this.gotoPage()}
+          >
+            <Text>GO TO ROUTE</Text>
+          </TouchableHighlight>
 
-        <TouchableHighlight
-          onPress={this.getForecast()}
-        >
-          <Text>Get forecast</Text>
-        </TouchableHighlight>
-
-        {this.renderWeather()}
+          <TouchableHighlight
+            onPress={this.getForecast()}
+          >
+            <Text>Get forecast</Text>
+          </TouchableHighlight>
+        <View>
+          
+        </View>
+        <View>
+          {this.renderWeather()}
+        </View>
       </View>
     );
   }
@@ -88,4 +94,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(GenericPage);
+export default connect(mapStateToProps)(SearchPage);
