@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
+  Image,
   TouchableHighlight,
   Text,
   View,
@@ -59,23 +60,28 @@ class GenericPage extends React.Component {
   render() {
     return (
       <View style={Style.container}>
-        <View style={Style.header}>
-          <Text style={Style.title}>{this.props.name}</Text>
-          <Text>Generic Page</Text>
-        </View>
-        <TouchableHighlight
-          onPress={this.gotoPage()}
-        >
-          <Text>GO TO ROUTE</Text>
-        </TouchableHighlight>
+        <Image 
+          style={Style.backdrop}
+//           source={{uri: 'https://unsplash.com/photos/cSe3oKQ03OQ/download'}}>
+          source={{uri: 'https://unsplash.com/photos/Ez5V2THOpDo/download'}}>
+          <View style={Style.header}>
+            <Text style={Style.title}>{this.props.name}</Text>
+            <Text>Generic Page</Text>
+          </View>
+          <TouchableHighlight
+            onPress={this.gotoPage()}
+          >
+            <Text>GO TO ROUTE</Text>
+          </TouchableHighlight>
 
-        <TouchableHighlight
-          onPress={this.getForecast()}
-        >
-          <Text>Get forecast</Text>
-        </TouchableHighlight>
+          <TouchableHighlight
+            onPress={this.getForecast()}
+          >
+            <Text>Get forecast</Text>
+          </TouchableHighlight>
 
-        {this.renderWeather()}
+          {this.renderWeather()}
+        </Image>
       </View>
     );
   }

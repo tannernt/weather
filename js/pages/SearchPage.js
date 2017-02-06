@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
+  Image,
   TouchableHighlight,
   Text,
   TextInput,
@@ -66,6 +67,10 @@ class SearchPage extends React.Component {
   render() {
     return (
       <View style={Style.container}>
+        <Image 
+        style={Style.backdrop} 
+        source={{uri: 'https://unsplash.com/photos/W0ZYnYIhhDc/download'}}>
+        
         <View style={Style.header}>
           <Text style={Style.title}>{this.props.name}</Text>
           <Text>Search Page</Text>
@@ -95,6 +100,7 @@ class SearchPage extends React.Component {
         <View>
           {this.renderWeather()}
         </View>
+        </Image>
       </View>
     );
   }
