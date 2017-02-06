@@ -5,7 +5,7 @@ export const WEATHER_URL = 'http://api.openweathermap.org/data/2.5/';
 export const WEATHER_API_KEY = '5c235b4f603679abafdad752cb2e669b';
 // export const getCityForecast = (city) => {
 //   return (dispatch) => {
-//     var url = WEATHER_URL + 'forecast?q=' + city + '&appid=' + WEATHER_API_KEY;
+//     var url = WEATHER_URL + `forecast?q=${city}&appid=${WEATHER_API_KEY}`;
 //     Request.get(url).then((response) => {
 //       dispatch({
 //         type: GET_CITY_FORECAST_SUCCESS,

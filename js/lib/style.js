@@ -13,6 +13,19 @@ var Style = StyleSheet.create({
   title: {
     alignSelf: 'center',
     fontWeight: '600',
+  },
+  searchRow: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  searchInput: {
+    height: 40,
+    flex: 2,
+    backgroundColor: '#FFFFFF'
+  },
+  searchIcon: {
+    flex: 1,
+    justifyContent: 'flex-end'
   }
 });
 

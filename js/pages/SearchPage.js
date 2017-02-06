@@ -1,20 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  Form,
-  Input,
   TouchableHighlight,
   Text,
+  TextInput,
   View,
 } from 'react-native';
+
 import { actions } from 'react-native-navigation-redux-helpers';
 import * as routes from '../ducks/routes';
 import { getCityForecast } from '../ducks/weather';
 import Style from '../lib/style';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const { pushRoute } = actions;
 
 class SearchPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { text: '' };
+  }
   componentWillReceiveProps(nextProps) {
     if (!this.props.weather.selectedCity || nextProps.weather.selectedCity) {
       this.props.dispatch(pushRoute({
@@ -76,8 +81,16 @@ class SearchPage extends React.Component {
           >
             <Text>Get forecast</Text>
           </TouchableHighlight>
-        <View>
-          
+        <View style={Style.searchRow}>
+          <TextInput 
+              autoFocus={true}
+              autoCapitalize='words'
+              placeholder='City'
+              onChangeText={(text) => this.setState({text})}
+              value={this.state.text}
+              style={Style.searchInput}
+          />
+          <Icon name='magnify' style={Style.searchIcon} size={30} color="#9F9F9F"/>
         </View>
         <View>
           {this.renderWeather()}
