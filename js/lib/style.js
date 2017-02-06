@@ -8,7 +8,7 @@ var Style = StyleSheet.create({
   header: {
     borderBottomWidth: 0.5,
     paddingTop: 20,
-    paddingBottom: 10,
+//     paddingBottom: 10,
     backgroundColor: '#F9F9F9'
   },
   title: {
@@ -17,7 +17,8 @@ var Style = StyleSheet.create({
   },
   searchRow: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingTop: 10
   },
   searchInput: {
     height: 40,
@@ -25,6 +26,7 @@ var Style = StyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   searchIcon: {
+    height: 40,
     flex: 1,
     justifyContent: 'flex-end'
   },

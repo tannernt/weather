@@ -73,8 +73,6 @@ class SearchPage extends React.Component {
         
         <View style={Style.header}>
           <Text style={Style.title}>{this.props.name}</Text>
-          <Text>Search Page</Text>
-        </View>
           <TouchableHighlight
             onPress={this.gotoPage()}
           >
@@ -86,6 +84,8 @@ class SearchPage extends React.Component {
           >
             <Text>Get forecast</Text>
           </TouchableHighlight>
+          <Text>Search Page</Text>
+        </View>
         <View style={Style.searchRow}>
           <TextInput 
               autoFocus={true}
