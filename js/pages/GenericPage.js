@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   Image,
+  ListView,
   TouchableHighlight,
   Text,
   View,
@@ -15,7 +16,28 @@ import Style from '../lib/style';
 
 const { pushRoute } = actions;
 
+
+let days = [
+  { day: 'Monday', temp: '45'},
+  { day: 'Tuesday', temp: '56'},
+  { day: 'Wednesday', temp: '47'},
+  { day: 'Thursday', temp: '49'},
+  { day: 'Friday', temp: '52'},
+]
+
+let data = new ListView.DataSource({
+  rowHasChanged: (row1, row2) => row1 != row2,
+});
+
 class GenericPage extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      dataSource: data.cloneWithRows(days)
+    }
+  }
+  
   componentWillReceiveProps(nextProps) {
     if (!this.props.weather.selectedCity || nextProps.weather.selectedCity) {
       this.props.dispatch(pushRoute({
@@ -66,7 +88,21 @@ class GenericPage extends React.Component {
 //           source={{uri: 'https://unsplash.com/photos/cSe3oKQ03OQ/download'}}>
           source={{uri: 'https://unsplash.com/photos/Ez5V2THOpDo/download'}}>
           <Header/>
-          {this.renderWeather()}
+          <View style={Style.top}>
+            <Text style={Style.currentTemp}>45</Text>
+          </View>
+          <View style={Style.bottom}>
+            <ListView
+              enableEmptySections={true}
+              dataSource={this.state.dataSource}
+              renderRow={ (rowData) => (
+                <View style={Style.forcastRow}>
+                  <Text style={Style.forcastDay}>{rowData.day}</Text>
+                  <Text style={Style.forcastDayDetails}>{rowData.temp}</Text>
+                </View>
+              )}
+            />
+          </View>
         </Image>
       </View>
     );
@@ -76,6 +112,7 @@ class GenericPage extends React.Component {
 function mapStateToProps(state) {
   return {
     navigation: state.navigation,
+    selectedCity: state.city,
     weather: state.weather,
   };
 }

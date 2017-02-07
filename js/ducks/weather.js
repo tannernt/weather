@@ -25,11 +25,10 @@ export const WEATHER_API_KEY = '5c235b4f603679abafdad752cb2e669b';
 
 export const getCityForecast = (city) => {
   return (dispatch) => {
-    setTimeout(() => {
       dispatch({
         type: GET_CITY_FORECAST_SUCCESS,
         payload: {
-          name: city,
+          cityName: city,
           forecast: [
             { temp: 1 },
             { temp: 2 },
@@ -38,8 +37,7 @@ export const getCityForecast = (city) => {
           ],
         },
       });
-    }, 2000);
-  };
+    };
 };
 
 const initialState = {
@@ -49,10 +47,7 @@ const initialState = {
 const weather = (state = initialState, action) => {
   switch(action.type) {
     case GET_CITY_FORECAST_SUCCESS:
-      return {
-        ...state,
-        selectedCity: action.payload.cityName,
-      };
+      return action.payload;
     default:
       return state;
   }

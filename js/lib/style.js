@@ -18,7 +18,7 @@ var Style = StyleSheet.create({
   searchRow: {
     flex: 1,
     flexDirection: 'row',
-    paddingTop: 10
+    paddingTop: 40
   },
   searchInput: {
     height: 40,
@@ -44,6 +44,36 @@ var Style = StyleSheet.create({
     textAlign: 'center',
     backgroundColor: 'rgba(0,0,0,0)',
     color: 'white'
+  },
+  top: {
+    flex: 2,
+  },
+  bottom: {
+    flex: 3
+  },
+  currentTemp: {
+    flex: 1,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    fontSize: 100,
+    fontWeight: '200'
+  },
+  forcastRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    height: 55,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderColor: '#A9A9A9'
+  },
+  forcastDay: {
+    fontSize: 20,
+    color: '#777777'
+  },
+  forcastDayDetails: {
+    fontSize: 20,
+    fontWeight: '300',
+    color: '#000000'
   }
 
 });

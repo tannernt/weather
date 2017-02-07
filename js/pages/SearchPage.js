@@ -19,8 +19,15 @@ const { pushRoute } = actions;
 class SearchPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: '' };
+    
+    this.state = { 
+      search: { city: '' }
+    };
+    
+    this.onSearchChange = this.onSearchChange.bind(this);
+    this.getForecast = this.getForecast.bind(this);
   }
+  
   componentWillReceiveProps(nextProps) {
     if (!this.props.weather.selectedCity || nextProps.weather.selectedCity) {
       this.props.dispatch(pushRoute({
@@ -37,7 +44,7 @@ class SearchPage extends React.Component {
     };
   }
 
-  getForecast(search = 'colorado springs') {
+  getForecast(search) {
     console.log(search);
     return () => {
       this.props.dispatch(getCityForecast(search));
@@ -62,6 +69,12 @@ class SearchPage extends React.Component {
     }
 
     return <Text>No Weather yet</Text>;
+  }
+  
+  onSearchChange(event) {
+    const search = this.state.search;
+    search.city = event.target.value;
+    this.setState({search: search });
   }
 
   render() {
@@ -91,11 +104,16 @@ class SearchPage extends React.Component {
               autoFocus={true}
               autoCapitalize='words'
               placeholder='City'
-              onChangeText={(text) => this.setState({text})}
-              value={this.state.text}
+              onChange={this.onSearchChange}
+              value={this.state.search.city}
               style={Style.searchInput}
           />
-          <Icon name='magnify' style={Style.searchIcon} size={30} color="#9F9F9F"/>
+          <Icon 
+            name='magnify' 
+            style={Style.searchIcon} 
+            size={30} 
+            color="#9F9F9F"
+            onPress={this.getForecast}/>
         </View>
         <View>
           {this.renderWeather()}
