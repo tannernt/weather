@@ -18,7 +18,7 @@ var Style = StyleSheet.create({
   searchRow: {
     flex: 1,
     flexDirection: 'row',
-    paddingTop: 40
+    paddingTop: 60
   },
   searchInput: {
     height: 40,

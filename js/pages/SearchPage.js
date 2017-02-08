@@ -23,9 +23,6 @@ class SearchPage extends React.Component {
     this.state = { 
       search: { city: '' }
     };
-    
-    this.onSearchChange = this.onSearchChange.bind(this);
-    this.getForecast = this.getForecast.bind(this);
   }
   
   componentWillReceiveProps(nextProps) {
@@ -44,10 +41,9 @@ class SearchPage extends React.Component {
     };
   }
 
-  getForecast(search) {
-    console.log(search);
+  getForecast() {
     return () => {
-      this.props.dispatch(getCityForecast(search));
+      this.props.dispatch(getCityForecast(this.state.search.city));
     };
   }
 
@@ -71,10 +67,11 @@ class SearchPage extends React.Component {
     return <Text>No Weather yet</Text>;
   }
   
-  onSearchChange(event) {
-    const search = this.state.search;
-    search.city = event.target.value;
-    this.setState({search: search });
+  onSearchChange() {
+    return (text) => {
+      const newState = {search: { city: text }}
+      this.setState(newState);
+    }
   }
 
   render() {
@@ -84,27 +81,12 @@ class SearchPage extends React.Component {
         style={Style.backdrop} 
         source={{uri: 'https://unsplash.com/photos/W0ZYnYIhhDc/download'}}>
         
-        <View style={Style.header}>
-          <Text style={Style.title}>{this.props.name}</Text>
-          <TouchableHighlight
-            onPress={this.gotoPage()}
-          >
-            <Text>GO TO ROUTE</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight
-            onPress={this.getForecast()}
-          >
-            <Text>Get forecast</Text>
-          </TouchableHighlight>
-          <Text>Search Page</Text>
-        </View>
         <View style={Style.searchRow}>
           <TextInput 
               autoFocus={true}
               autoCapitalize='words'
               placeholder='City'
-              onChange={this.onSearchChange}
+              onChangeText={this.onSearchChange()}
               value={this.state.search.city}
               style={Style.searchInput}
           />
@@ -113,10 +95,7 @@ class SearchPage extends React.Component {
             style={Style.searchIcon} 
             size={30} 
             color="#9F9F9F"
-            onPress={this.getForecast}/>
-        </View>
-        <View>
-          {this.renderWeather()}
+            onPress={this.getForecast()}/>
         </View>
         </Image>
       </View>

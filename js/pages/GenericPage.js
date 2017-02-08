@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { actions } from 'react-native-navigation-redux-helpers';
 import * as routes from '../ducks/routes';
-import { getCityForecast } from '../ducks/weather';
+import { getCityWeather } from '../ducks/weather';
 import Header from '../Header';
 import Style from '../lib/style';
 
@@ -54,9 +54,9 @@ class GenericPage extends React.Component {
     };
   }
 
-  getForecast() {
+  getWeather() {
     return () => {
-      this.props.dispatch(getCityForecast('colorado springs'));
+      this.props.dispatch(getCityWeather(this.props.search.city));
     };
   }
 
