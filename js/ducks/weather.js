@@ -16,7 +16,7 @@ export const getCityForecast = (city) => {
         dispatch({
           type: GET_CITY_FORECAST_SUCCESS,
           payload: {
-            cityName: response.city.name,
+            cityName: response.data.city.name,
             forecast: [
               { temp: 1 },
               { temp: 2 },
