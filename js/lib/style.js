@@ -8,31 +8,48 @@ var Style = StyleSheet.create({
   header: {
     borderBottomWidth: 0.5,
     paddingTop: 20,
-//     paddingBottom: 10,
     backgroundColor: '#F9F9F9'
   },
   title: {
     alignSelf: 'center',
     fontWeight: '600',
   },
-  searchRow: {
+  searchTop: {
+    flex: 2,
+  },
+  searchBottom: {
+    flex: 1
+  },
+  searchWrapper: {
     flex: 1,
-    flexDirection: 'row',
-    paddingTop: 60
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   searchInput: {
     height: 40,
-    flex: 2,
+    width: 200,
     backgroundColor: '#FFFFFF'
+  },
+  searchButton: {
+    paddingTop: 20,
+    alignSelf: 'center'
+  },
+  searchButtonText: {
+    fontSize: 16,
   },
   searchIcon: {
     height: 40,
-    flex: 1,
-    justifyContent: 'flex-end'
+    width: 200,
+    borderWidth: 0.25,
+    borderColor: '#7F7F7F',
+    backgroundColor: '#9F9F9F',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   backdrop: {
     flex: 1,
-    resizeMode: 'cover'
+    width: null,
+    height: null
   },
   backdropView: {
     height: 120,
@@ -46,10 +63,10 @@ var Style = StyleSheet.create({
     color: 'white'
   },
   top: {
-    flex: 2,
+    flex: 1,
   },
   bottom: {
-    flex: 3
+    flex: 2
   },
   currentTemp: {
     flex: 1,

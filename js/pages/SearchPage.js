@@ -33,38 +33,10 @@ class SearchPage extends React.Component {
     }
   }
 
-  gotoPage() {
-    return () => {
-      this.props.dispatch(pushRoute({
-        key: routes.ROUTE_CITY_FORECAST
-      }, this.props.navigation.key));
-    };
-  }
-
   getForecast() {
     return () => {
       this.props.dispatch(getCityForecast(this.state.search.city));
     };
-  }
-
-  renderWeather() {
-    const { selectedCity } = this.props.weather;
-    if (this.props.weather.selectedCity) {
-      return (
-        <View>
-          <Text>City: {selectedCity.name}</Text>
-          {selectedCity.forecast.map((f, index) => (
-            <Text
-              key={index}
-            >
-              {f.temp} degrees
-            </Text>
-          ))}
-        </View>
-      );
-    }
-
-    return <Text>No Weather yet</Text>;
   }
   
   onSearchChange() {
@@ -79,24 +51,33 @@ class SearchPage extends React.Component {
       <View style={Style.container}>
         <Image 
         style={Style.backdrop} 
-        source={{uri: 'https://unsplash.com/photos/W0ZYnYIhhDc/download'}}>
-        
-        <View style={Style.searchRow}>
-          <TextInput 
-              autoFocus={true}
-              autoCapitalize='words'
-              placeholder='City'
-              onChangeText={this.onSearchChange()}
-              value={this.state.search.city}
-              style={Style.searchInput}
-          />
-          <Icon 
-            name='magnify' 
-            style={Style.searchIcon} 
-            size={30} 
-            color="#9F9F9F"
-            onPress={this.getForecast()}/>
-        </View>
+        source={require('../img/weather_vane.png')}>
+          <View style={Style.searchTop}>
+            <View style={Style.searchWrapper}>
+              <View>
+                <TextInput 
+                    autoFocus={true}
+                    autoCapitalize='words'
+                    placeholder='City'
+                    onChangeText={this.onSearchChange()}
+                    value={this.state.search.city}
+                    style={Style.searchInput}
+                />
+              </View>
+            <View style={Style.searchButton}>
+              <Icon.Button
+                    name='magnify' 
+                    style={Style.searchIcon} 
+                    size={26}
+                    color="#2D2D2D"
+                    onPress={this.getForecast()}>
+                  <Text style={Style.searchButtonText}>Search City</Text>
+                </Icon.Button>
+              </View>
+            </View>
+          </View>
+          <View style={Style.searchBottom}>
+          </View>
         </Image>
       </View>
     );
