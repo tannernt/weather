@@ -39,9 +39,9 @@ class ForecastPage extends React.Component {
   }
   
   componentWillReceiveProps(nextProps) {
-    if (!this.props.weather.selectedCity || nextProps.weather.selectedCity) {
+    if (!this.props.weather.selectedDay || nextProps.weather.selectedDay) {
       this.props.dispatch(pushRoute({
-        key: routes.ROUTE_CITY_FORECAST
+        key: routes.ROUTE_CITY_DAY_FORECAST
       }, this.props.navigation.key));
     }
   }

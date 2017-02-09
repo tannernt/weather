@@ -72,17 +72,17 @@ export const getCityWeather = (city) => {
 
 const initialState = {
   selectedCity: false,
+  selectedDay: false
 };
 
 const weather = (state = initialState, action) => {
   switch(action.type) {
-    case GET_CITY_FORECAST_DAY_SUCCESS:
+    case GET_CITY_FORECAST_SUCCESS:
       return {
         ...state,
-        weather: action.payload,
-        navigation: ROUTE_CITY_FORECAST
+        selectedCity: action.payload,
         };
-    case GET_CITY_FORECAST_DAY_ERROR:
+    case GET_CITY_FORECAST_ERROR:
       return {
         ...state,
         error: action.payload
@@ -90,8 +90,7 @@ const weather = (state = initialState, action) => {
     case GET_CITY_FORECAST_DAY_SUCCESS:
       return {
         ...state,
-        weather: action.payload,
-        navigation: ROUTE_CITY_DAY_FORECAST
+        selectedDay: action.payload
         };
     case GET_CITY_FORECAST_DAY_ERROR:
       return {

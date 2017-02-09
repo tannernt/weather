@@ -37,14 +37,6 @@ class ForecastDayPage extends React.Component {
       dataSource: data.cloneWithRows(days)
     }
   }
-  
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.weather.selectedCity || nextProps.weather.selectedCity) {
-      this.props.dispatch(pushRoute({
-        key: routes.ROUTE_CITY_FORECAST
-      }, this.props.navigation.key));
-    }
-  }
 
   gotoPage() {
     return () => {
