@@ -36,8 +36,8 @@ export const getCityForecast = (city) => {
   };
 };
 
-export const GET_CITY_WEATHER_SUCCESS = 'GET_CITY_WEATHER_SUCCESS';
-export const GET_CITY_WEATHER_ERROR = 'GET_CITY_WEATHER_ERROR';
+export const GET_CITY_FORECAST_DAY_SUCCESS = 'GET_CITY_FORECAST_DAY_SUCCESS';
+export const GET_CITY_FORECAST_DAY_ERROR = 'GET_CITY_FORECAST_DAY_ERROR';
 export const getCityWeather = (city) => {
   return (dispatch) => {
     
@@ -47,9 +47,9 @@ export const getCityWeather = (city) => {
       .then((response) => {
         console.log(response);
         dispatch({
-          type: GET_CITY_WEATHER_SUCCESS,
+          type: GET_CITY_FORECAST_DAY_SUCCESS,
           payload: {
-            cityName: response.city.name,
+            cityName: response.city.data.name,
             forecast: [
               { temp: 1 },
               { temp: 2 },
@@ -63,29 +63,12 @@ export const getCityWeather = (city) => {
       console.log()
       console.error(error);
       dispatch({
-        type: GET_CITY_WEATHER_ERROR,
+        type: GET_CITY_FORECAST_DAY_ERROR,
         payload: error,
       })
     });
   };
 };
-
-// export const getCityForecast = (city) => {
-//   return (dispatch) => {
-//       dispatch({
-//         type: GET_CITY_FORECAST_SUCCESS,
-//         payload: {
-//           cityName: city,
-//           forecast: [
-//             { temp: 1 },
-//             { temp: 2 },
-//             { temp: 3 },
-//             { temp: 4 },
-//           ],
-//         },
-//       });
-//     };
-// };
 
 const initialState = {
   selectedCity: false,
@@ -93,22 +76,24 @@ const initialState = {
 
 const weather = (state = initialState, action) => {
   switch(action.type) {
-    case GET_CITY_WEATHER_SUCCESS:
+    case GET_CITY_FORECAST_DAY_SUCCESS:
       return {
         ...state,
-        selectedCity: action.payload
+        weather: action.payload,
+        navigation: ROUTE_CITY_FORECAST
         };
-    case GET_CITY_WEATHER_ERROR:
+    case GET_CITY_FORECAST_DAY_ERROR:
       return {
         ...state,
         error: action.payload
         };
-    case GET_CITY_WEATHER_SUCCESS:
+    case GET_CITY_FORECAST_DAY_SUCCESS:
       return {
         ...state,
-        selectedCity: action.payload
+        weather: action.payload,
+        navigation: ROUTE_CITY_DAY_FORECAST
         };
-    case GET_CITY_FORECAST_ERROR:
+    case GET_CITY_FORECAST_DAY_ERROR:
       return {
         ...state,
         error: action.payload

@@ -64,8 +64,8 @@ class SearchPage extends React.Component {
                     style={Style.searchInput}
                 />
               </View>
-            <View style={Style.searchButton}>
-              <Icon.Button
+              <View style={Style.searchButton}>
+                <Icon.Button
                     name='magnify' 
                     style={Style.searchIcon} 
                     size={26}

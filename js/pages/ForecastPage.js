@@ -29,7 +29,7 @@ let data = new ListView.DataSource({
   rowHasChanged: (row1, row2) => row1 != row2,
 });
 
-class GenericPage extends React.Component {
+class ForecastPage extends React.Component {
   constructor(props) {
     super(props);
     
@@ -117,4 +117,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(GenericPage);
+export default connect(mapStateToProps)(ForecastPage);

@@ -4,7 +4,6 @@ import weather from './weather';
 
 const reducers = {
   navigation,
-//   selectedCity,
   weather,
 };
 

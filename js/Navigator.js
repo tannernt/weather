@@ -8,7 +8,8 @@ import {
 import { connect } from 'react-redux';
 import { actions } from 'react-native-navigation-redux-helpers';
 import SearchPage from './pages/SearchPage';
-import GenericPage from './pages/GenericPage';
+import ForecastPage from './pages/ForecastPage';
+import ForecastDayPage from './pages/ForecastDayPage';
 import * as routes from './ducks/routes';
 
 const {
@@ -50,13 +51,13 @@ class Navigator extends React.Component {
       let page;
       switch (props.scene.route.key) {
         case routes.ROUTE_CITY_FORECAST:
-          page = <GenericPage name="CITY"/>;
+          page = <ForecastPage />;
           break;
         case routes.ROUTE_CITY_DAY_FORECAST:
-          page = <GenericPage name="DAY"/>;
+          page = <ForecastDayPage />;
           break;
         default:
-          page = <SearchPage name="HOME"/>;
+          page = <SearchPage />;
           break;
       }
 

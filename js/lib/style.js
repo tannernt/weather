@@ -26,6 +26,7 @@ var Style = StyleSheet.create({
     alignItems: 'center'
   },
   searchInput: {
+    padding: 5,
     height: 40,
     width: 200,
     backgroundColor: '#FFFFFF'
