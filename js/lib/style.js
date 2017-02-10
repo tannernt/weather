@@ -69,12 +69,13 @@ var Style = StyleSheet.create({
   bottom: {
     flex: 2
   },
-  currentTemp: {
-    flex: 1,
-    alignSelf: 'center',
-    justifyContent: 'center',
+  temp: {
     fontSize: 100,
     fontWeight: '200'
+  },
+  currentTemp: {
+    alignSelf: 'center',
+    justifyContent: 'center',
   },
   forcastRow: {
     flexDirection: 'row',
@@ -93,7 +94,6 @@ var Style = StyleSheet.create({
     fontWeight: '300',
     color: '#000000'
   }
-
 });
 
 export default Style;

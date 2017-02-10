@@ -8,10 +8,12 @@ import {
   View,
 } from 'react-native';
 import { actions } from 'react-native-navigation-redux-helpers';
+// import { FormattedDate } from 'react-intl';
 import * as routes from '../ducks/routes';
 import { getCityWeather } from '../ducks/weather';
 import Header from '../Header';
 import Style from '../lib/style';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 const { pushRoute } = actions;
@@ -59,13 +61,49 @@ class ForecastPage extends React.Component {
       this.props.dispatch(getCityWeather(this.props.search.city));
     };
   }
+  
+  getCardinal(angle) {
+    //easy to customize by changing the number of directions you have 
+    var directions = 8;
+
+    var degree = 360 / directions;
+    angle = angle + degree/2;
+
+    if (angle >= 0 * degree && angle < 1 * degree)
+        return "N";
+    if (angle >= 1 * degree && angle < 2 * degree)
+        return "NE";
+    if (angle >= 2 * degree && angle < 3 * degree)
+        return "E";
+    if (angle >= 3 * degree && angle < 4 * degree)
+        return "SE";
+    if (angle >= 4 * degree && angle < 5 * degree)
+        return "S";
+    if (angle >= 5 * degree && angle < 6 * degree)
+        return "SW";
+    if (angle >= 6 * degree && angle < 7 * degree)
+        return "W";
+    if (angle >= 7 * degree && angle < 8 * degree)
+        return "NW";
+    //Should never happen: 
+    return "N";
+};
 
   renderWeather() {
     const { selectedCity } = this.props.weather;
     if (this.props.weather.selectedCity) {
       return (
         <View>
-          <Text>City: {selectedCity.name}</Text>
+          <Text>{selectedCity.name}, {selectedCity.country}</Text>
+          <Text>{selectedCity.weatherDescription}</Text>
+          <View style={Style.currentTemp}>
+            <Text style={Style.temp}>{selectedCity.temp} <Icon name='temperature-fahrenheit' 
+                    size={100}
+                    color="#2D2D2D"></Icon></Text>
+          </View>
+          <Text>{selectedCity.humidity}%</Text>
+          <Text>{selectedCity.windSpeed} mph {this.getCardinal(selectedCity.windDirection)}</Text>
+          
           {selectedCity.forecast.map((f, index) => (
             <Text
               key={index}
@@ -89,7 +127,8 @@ class ForecastPage extends React.Component {
           source={{uri: 'https://unsplash.com/photos/Ez5V2THOpDo/download'}}>
           <Header/>
           <View style={Style.top}>
-            <Text style={Style.currentTemp}>45</Text>
+            
+            <View>{this.renderWeather()}</View>
           </View>
           <View style={Style.bottom}>
             <ListView
