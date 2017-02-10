@@ -9,7 +9,7 @@ import { actions } from 'react-native-navigation-redux-helpers';
 import * as routes from './ducks/routes';
 import { getCityForecast } from './ducks/weather';
 import Style from './lib/style';
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const { pushRoute } = actions;
 
@@ -21,6 +21,14 @@ class Header extends React.Component {
       }, this.props.navigation.key));
     }
   }
+  
+  gobackPage() {
+    return () => {
+      this.props.dispatch(pushRoute({
+        key: routes.ROUTE_HOME
+      }, this.props.navigation.key));
+    };
+  }
 
   gotoPage() {
     return () => {
@@ -30,27 +38,18 @@ class Header extends React.Component {
     };
   }
 
-  getForecast() {
-    return () => {
-      this.props.dispatch(getCityForecast('colorado springs'));
-    };
-  }
-
   render() {
     return (
       <View style={Style.header}>
-        <Text style={Style.title}>{this.props.name}</Text>
-        <Text>Generic Page</Text>
+        <Text style={Style.back}>{this.props.name}</Text>
         <TouchableHighlight
           onPress={this.gotoPage()}
         >
-          <Text>GO TO ROUTE</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight
-          onPress={this.getForecast()}
-        >
-          <Text>Get forecast</Text>
+          <View><Icon name='home' 
+                size={26}
+                color="#2D2D2D"/>
+          <Text>Home</Text>
+            </View>
         </TouchableHighlight>
       </View>
     );

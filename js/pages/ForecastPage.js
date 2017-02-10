@@ -15,30 +15,20 @@ import Header from '../Header';
 import Style from '../lib/style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-
 const { pushRoute } = actions;
-
-
-let days = [
-  { day: 'Monday', temp: '45'},
-  { day: 'Tuesday', temp: '56'},
-  { day: 'Wednesday', temp: '47'},
-  { day: 'Thursday', temp: '49'},
-  { day: 'Friday', temp: '52'},
-]
 
 let data = new ListView.DataSource({
   rowHasChanged: (row1, row2) => row1 != row2,
 });
 
 class ForecastPage extends React.Component {
-  constructor(props) {
-    super(props);
+//   constructor(props) {
+//     super(props);
     
-    this.state = {
-      dataSource: data.cloneWithRows(days)
-    }
-  }
+//     this.state = {
+//       dataSource: data.cloneWithRows(this.props.weather.selectedCity.forecast)
+//     }
+//   }
   
   componentWillReceiveProps(nextProps) {
     if (!this.props.weather.selectedDay || nextProps.weather.selectedDay) {
@@ -85,37 +75,47 @@ class ForecastPage extends React.Component {
         return "W";
     if (angle >= 7 * degree && angle < 8 * degree)
         return "NW";
-    //Should never happen: 
     return "N";
 };
 
   renderWeather() {
     const { selectedCity } = this.props.weather;
+    
     if (this.props.weather.selectedCity) {
       return (
-        <View>
-          <Text>{selectedCity.name}, {selectedCity.country}</Text>
-          <Text>{selectedCity.weatherDescription}</Text>
-          <View style={Style.currentTemp}>
-            <Text style={Style.temp}>{selectedCity.temp} <Icon name='temperature-fahrenheit' 
+        <View style={Style.top}>
+          <View style={Style.currentWeather}>
+          <Text style={Style.city}>{selectedCity.name}, {selectedCity.country}</Text>
+          <Text style={Style.weatherDescription}>{selectedCity.forecast[0].description}</Text>
+            <Text style={Style.temp}>
+              {selectedCity.forecast[0].temp} <Icon name='temperature-fahrenheit' 
                     size={100}
-                    color="#2D2D2D"></Icon></Text>
-          </View>
-          <Text>{selectedCity.humidity}%</Text>
-          <Text>{selectedCity.windSpeed} mph {this.getCardinal(selectedCity.windDirection)}</Text>
-          
-          {selectedCity.forecast.map((f, index) => (
-            <Text
-              key={index}
-            >
-              {f.temp} degrees
+                    color="#2D2D2D">
+              </Icon>
             </Text>
-          ))}
+          </View>
+          <Text>{selectedCity.forecast[0].humidity}%</Text>
+          <Text>{selectedCity.forecast[0].windSpeed} mph {this.getCardinal(selectedCity.forecast[0].windDirection)}</Text>
         </View>
       );
     }
-
-    return <Text>No Weather yet</Text>;
+  }
+  
+  renderForecast() {
+    const { selectedCity } = this.props.weather;
+    
+    if (this.props.weather.selectedCity) {
+      <View>
+        <ListView
+          enableEmptySections={true}
+          dataSource={data.cloneWithRows(selectedCity.forecast)}
+          renderRow={ (data) => <View style={Style.forecastRow} >
+              <Text style={Style.forecastDay}>{data.dateTime}</Text>
+              <Text style={Style.forecastDayDetails}>{data.temp}</Text>
+            </View>}
+        />
+      </View>
+    }
   }
 
   render() {
@@ -126,21 +126,9 @@ class ForecastPage extends React.Component {
 //           source={{uri: 'https://unsplash.com/photos/cSe3oKQ03OQ/download'}}>
           source={{uri: 'https://unsplash.com/photos/Ez5V2THOpDo/download'}}>
           <Header/>
-          <View style={Style.top}>
-            
-            <View>{this.renderWeather()}</View>
-          </View>
+            {this.renderWeather()}
           <View style={Style.bottom}>
-            <ListView
-              enableEmptySections={true}
-              dataSource={this.state.dataSource}
-              renderRow={ (rowData) => (
-                <View style={Style.forcastRow}>
-                  <Text style={Style.forcastDay}>{rowData.day}</Text>
-                  <Text style={Style.forcastDayDetails}>{rowData.temp}</Text>
-                </View>
-              )}
-            />
+            {this.renderForecast()}
           </View>
         </Image>
       </View>

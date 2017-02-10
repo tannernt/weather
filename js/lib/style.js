@@ -69,15 +69,25 @@ var Style = StyleSheet.create({
   bottom: {
     flex: 2
   },
+  currentWeather: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  city: {
+    paddingTop: 30,
+    fontSize: 40,
+    fontWeight: '300'
+  },
+  weatherDescription: {
+    fontSize: 30,
+    fontWeight: '200'
+  },
   temp: {
     fontSize: 100,
     fontWeight: '200'
   },
-  currentTemp: {
-    alignSelf: 'center',
-    justifyContent: 'center',
-  },
-  forcastRow: {
+  forecastRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     height: 55,
@@ -85,11 +95,11 @@ var Style = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: '#A9A9A9'
   },
-  forcastDay: {
+  forecastDay: {
     fontSize: 20,
     color: '#777777'
   },
-  forcastDayDetails: {
+  forecastDayDetails: {
     fontSize: 20,
     fontWeight: '300',
     color: '#000000'
