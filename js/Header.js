@@ -36,11 +36,13 @@ class Header extends React.Component {
         <TouchableHighlight
           onPress={this.navigateBack()}
         >
-          <View><Icon name='keyboard-return' 
+          <View style={Style.navBack}>
+            <Icon name='code-less-than' 
                 size={26}
-                color="#2D2D2D"/>
-          <Text>Back</Text>
-            </View>
+                color="#2D2D2D">
+            </Icon>
+            <Text>Back</Text>
+          </View>
         </TouchableHighlight>
       </View>
     );

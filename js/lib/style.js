@@ -8,7 +8,14 @@ var Style = StyleSheet.create({
   header: {
     borderBottomWidth: 0.5,
     paddingTop: 10,
+    paddingLeft: 5,
+    paddingBottom: 5,
+    opacity: 0.4,
     backgroundColor: '#F9F9F9'
+  },
+  navBack: {
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   title: {
     alignSelf: 'center',

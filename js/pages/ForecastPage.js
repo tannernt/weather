@@ -22,14 +22,6 @@ let data = new ListView.DataSource({
 });
 
 class ForecastPage extends React.Component {
-  
-//   componentWillReceiveProps(nextProps) {
-//     if (!this.props.weather.selectedDay || nextProps.weather.selectedDay) {
-//       this.props.dispatch(pushRoute({
-//         key: routes.ROUTE_CITY_DAY_FORECAST
-//       }, this.props.navigation.key));
-//     }
-//   }
 
   gotoPage(day) {
     return () => {
@@ -60,6 +52,9 @@ class ForecastPage extends React.Component {
         return 'weather-snowy';
       case 'Atmosphere':
         return 'weather-fog';
+      case 'Extreme':
+      case 'Additional':
+        return 'weather-windy';
       default:
         return 'weather-sunny';
     }
@@ -107,8 +102,6 @@ class ForecastPage extends React.Component {
               </Icon>
             </Text>
           </View>
-          <Text>Humidity: {selectedCity.forecast[0].humidity}%</Text>
-          <Text>Wind: {selectedCity.forecast[0].windSpeed} mph {this.getCardinal(selectedCity.forecast[0].windDirection)}</Text>
         </View>
       );
     }
