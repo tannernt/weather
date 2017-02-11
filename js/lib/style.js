@@ -7,7 +7,7 @@ var Style = StyleSheet.create({
   },
   header: {
     borderBottomWidth: 0.5,
-    paddingTop: 20,
+    paddingTop: 10,
     backgroundColor: '#F9F9F9'
   },
   title: {
@@ -64,7 +64,7 @@ var Style = StyleSheet.create({
     color: 'white'
   },
   top: {
-    flex: 1,
+    flex: 2,
   },
   bottom: {
     flex: 2
@@ -91,18 +91,25 @@ var Style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     height: 55,
-    paddingTop: 10,
+    padding: 10,
     borderTopWidth: 1,
     borderColor: '#A9A9A9'
   },
   forecastDay: {
+    flex: 1,
     fontSize: 20,
-    color: '#777777'
+    color: '#777777',
+    justifyContent: 'space-around',
+  },
+  forecastIcon: {
+    flex: 1,
+    justifyContent: 'space-around'
   },
   forecastDayDetails: {
     fontSize: 20,
     fontWeight: '300',
-    color: '#000000'
+    color: '#000000',
+    justifyContent: 'flex-end'
   }
 });
 

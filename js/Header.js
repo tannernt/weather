@@ -11,44 +11,35 @@ import { getCityForecast } from './ducks/weather';
 import Style from './lib/style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const { pushRoute } = actions;
+const {
+  popRoute,
+} = actions;
+
 
 class Header extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.weather.selectedCity || nextProps.weather.selectedCity) {
-      this.props.dispatch(pushRoute({
-        key: routes.ROUTE_CITY_FORECAST
-      }, this.props.navigation.key));
-    }
+
+  
+  navigateBack() {
+    return () => {
+      const {
+        navigation,
+        dispatch,
+      } = this.props;
+      dispatch(popRoute(navigation.key));
+    };
   }
   
-  gobackPage() {
-    return () => {
-      this.props.dispatch(pushRoute({
-        key: routes.ROUTE_HOME
-      }, this.props.navigation.key));
-    };
-  }
-
-  gotoPage() {
-    return () => {
-      this.props.dispatch(pushRoute({
-        key: routes.ROUTE_CITY_FORECAST
-      }, this.props.navigation.key));
-    };
-  }
-
   render() {
     return (
       <View style={Style.header}>
         <Text style={Style.back}>{this.props.name}</Text>
         <TouchableHighlight
-          onPress={this.gotoPage()}
+          onPress={this.navigateBack()}
         >
-          <View><Icon name='home' 
+          <View><Icon name='keyboard-return' 
                 size={26}
                 color="#2D2D2D"/>
-          <Text>Home</Text>
+          <Text>Back</Text>
             </View>
         </TouchableHighlight>
       </View>

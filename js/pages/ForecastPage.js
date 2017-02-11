@@ -7,42 +7,34 @@ import {
   Text,
   View,
 } from 'react-native';
-import { actions } from 'react-native-navigation-redux-helpers';
-// import { FormattedDate } from 'react-intl';
 import * as routes from '../ducks/routes';
-import { getCityWeather } from '../ducks/weather';
+import { getCityWeather, setSelectedDay } from '../ducks/weather';
+import { navigateTo } from '../ducks/navigation';
 import Header from '../Header';
 import Style from '../lib/style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import moment from 'moment';
 
-const { pushRoute } = actions;
+
 
 let data = new ListView.DataSource({
   rowHasChanged: (row1, row2) => row1 != row2,
 });
 
 class ForecastPage extends React.Component {
-//   constructor(props) {
-//     super(props);
-    
-//     this.state = {
-//       dataSource: data.cloneWithRows(this.props.weather.selectedCity.forecast)
+  
+//   componentWillReceiveProps(nextProps) {
+//     if (!this.props.weather.selectedDay || nextProps.weather.selectedDay) {
+//       this.props.dispatch(pushRoute({
+//         key: routes.ROUTE_CITY_DAY_FORECAST
+//       }, this.props.navigation.key));
 //     }
 //   }
-  
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.weather.selectedDay || nextProps.weather.selectedDay) {
-      this.props.dispatch(pushRoute({
-        key: routes.ROUTE_CITY_DAY_FORECAST
-      }, this.props.navigation.key));
-    }
-  }
 
-  gotoPage() {
+  gotoPage(day) {
     return () => {
-      this.props.dispatch(pushRoute({
-        key: routes.ROUTE_CITY_FORECAST
-      }, this.props.navigation.key));
+      this.props.dispatch(setSelectedDay(day));
+      this.props.dispatch(navigateTo(routes.ROUTE_CITY_DAY_FORECAST, this.props.navigation.key));
     };
   }
 
@@ -50,6 +42,27 @@ class ForecastPage extends React.Component {
     return () => {
       this.props.dispatch(getCityWeather(this.props.search.city));
     };
+  }
+  
+  getWeatherIcon(description) {
+    switch(description) {
+      case 'Clear':
+        return 'weather-sunny';
+      case 'Clouds':
+        return 'weather-cloudy';
+      case 'Drizzle':
+        return 'weather-pouring';
+      case 'Rain':
+        return 'weather-rainy';
+      case 'Rhunderstorm':
+        return 'weather-ligthning-rainy';
+      case 'Snow':
+        return 'weather-snowy';
+      case 'Atmosphere':
+        return 'weather-fog';
+      default:
+        return 'weather-sunny';
+    }
   }
   
   getCardinal(angle) {
@@ -76,7 +89,7 @@ class ForecastPage extends React.Component {
     if (angle >= 7 * degree && angle < 8 * degree)
         return "NW";
     return "N";
-};
+  };
 
   renderWeather() {
     const { selectedCity } = this.props.weather;
@@ -94,8 +107,8 @@ class ForecastPage extends React.Component {
               </Icon>
             </Text>
           </View>
-          <Text>{selectedCity.forecast[0].humidity}%</Text>
-          <Text>{selectedCity.forecast[0].windSpeed} mph {this.getCardinal(selectedCity.forecast[0].windDirection)}</Text>
+          <Text>Humidity: {selectedCity.forecast[0].humidity}%</Text>
+          <Text>Wind: {selectedCity.forecast[0].windSpeed} mph {this.getCardinal(selectedCity.forecast[0].windDirection)}</Text>
         </View>
       );
     }
@@ -105,16 +118,26 @@ class ForecastPage extends React.Component {
     const { selectedCity } = this.props.weather;
     
     if (this.props.weather.selectedCity) {
-      <View>
-        <ListView
-          enableEmptySections={true}
-          dataSource={data.cloneWithRows(selectedCity.forecast)}
-          renderRow={ (data) => <View style={Style.forecastRow} >
-              <Text style={Style.forecastDay}>{data.dateTime}</Text>
-              <Text style={Style.forecastDayDetails}>{data.temp}</Text>
-            </View>}
-        />
-      </View>
+      return (
+        <View style={Style.bottom}>
+          <ListView
+            enableEmptySections={true}
+            dataSource={data.cloneWithRows(selectedCity.forecast)}
+            renderRow={ (data) => <TouchableHighlight
+            onPress={this.gotoPage(data)}>
+                <View style={Style.forecastRow} >
+                  <Text style={Style.forecastDay}>{moment.utc(data.dateTime).format('dddd')}</Text>
+                  <Icon name={this.getWeatherIcon(data.mainDescription)}
+                    style={Style.forecastIcon}
+                    size={30}
+                    color="#2D2D2D">
+                  </Icon>
+                  <Text style={Style.forecastDayDetails}>{data.temp}</Text>
+                </View>
+              </TouchableHighlight>}
+          />
+        </View>
+      );
     }
   }
 
@@ -123,13 +146,10 @@ class ForecastPage extends React.Component {
       <View style={Style.container}>
         <Image 
           style={Style.backdrop}
-//           source={{uri: 'https://unsplash.com/photos/cSe3oKQ03OQ/download'}}>
-          source={{uri: 'https://unsplash.com/photos/Ez5V2THOpDo/download'}}>
+          source={require('../img/clouds.png')}>
           <Header/>
             {this.renderWeather()}
-          <View style={Style.bottom}>
             {this.renderForecast()}
-          </View>
         </Image>
       </View>
     );

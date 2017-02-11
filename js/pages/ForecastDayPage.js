@@ -7,44 +7,25 @@ import {
   Text,
   View,
 } from 'react-native';
-import { actions } from 'react-native-navigation-redux-helpers';
 import * as routes from '../ducks/routes';
 import { getCityWeather } from '../ducks/weather';
 import Header from '../Header';
 import Style from '../lib/style';
 
 
-const { pushRoute } = actions;
-
-
-let days = [
-  { day: 'Monday', temp: '45'},
-  { day: 'Tuesday', temp: '56'},
-  { day: 'Wednesday', temp: '47'},
-  { day: 'Thursday', temp: '49'},
-  { day: 'Friday', temp: '52'},
-]
-
 let data = new ListView.DataSource({
   rowHasChanged: (row1, row2) => row1 != row2,
 });
 
 class ForecastDayPage extends React.Component {
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      dataSource: data.cloneWithRows(days)
-    }
-  }
 
-  gotoPage() {
-    return () => {
-      this.props.dispatch(pushRoute({
-        key: routes.ROUTE_CITY_FORECAST
-      }, this.props.navigation.key));
-    };
-  }
+//   gotoPage() {
+//     return () => {
+//       this.props.dispatch(pushRoute({
+//         key: routes.ROUTE_CITY_FORECAST
+//       }, this.props.navigation.key));
+//     };
+//   }
 
   getWeather() {
     return () => {

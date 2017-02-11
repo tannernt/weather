@@ -24,17 +24,11 @@ class SearchPage extends React.Component {
     };
   }
   
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.weather.selectedCity || nextProps.weather.selectedCity) {
-      this.props.dispatch(pushRoute({
-        key: routes.ROUTE_CITY_FORECAST
-      }, this.props.navigation.key));
-    }
-  }
+
 
   getForecast() {
     return () => {
-      this.props.dispatch(getCityForecast(this.state.search.city));
+      this.props.dispatch(getCityForecast(this.state.search.city, this.props.navigation.key));
     };
   }
   
