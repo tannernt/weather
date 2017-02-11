@@ -3,7 +3,18 @@ import moment from 'moment';
 
 import * as routes from '../ducks/routes';
 import { navigateTo } from './navigation';
+import update from 'immutability-helper';
 
+export const SET_SEARCH_HISTORY = 'SET_SEARCH_HISTORY';
+
+export const setSearchHistory = (search, currentHistory) =>{
+  const newSearch = [search];
+  const newSearchHistory = update(currentHistory, {$push: newSearch});
+  return (dispatch) => dispatch({
+    type: SET_SEARCH_HISTORY, 
+    payload: newSearchHistory,
+  });
+}
 
 export const WEATHER_URL = 'http://api.openweathermap.org/data/2.5/forecast/daily';
 export const WEATHER_API_KEY = '5c235b4f603679abafdad752cb2e669b';
@@ -11,35 +22,29 @@ export const WEATHER_API_KEY = '5c235b4f603679abafdad752cb2e669b';
 export const GET_CITY_FORECAST_SUCCESS = 'GET_CITY_FORECAST_SUCCESS';
 export const GET_CITY_FORECAST_ERROR = 'GET_CITY_FORECAST_ERROR';
 
-export const SET_SELECTED_CITY = 'SET_SELECTED_CITY';
-
-export const setSelectedDay = (day) =>{
-  return (dispatch) => dispatch({type: SET_SELECTED_CITY, payload: day});
-}
-
 export const getCityForecast = (city, currentKey) => {
   return (dispatch) => {
     
     var url = WEATHER_URL + `?q=${city}&units=imperial&type=accurate&mode=json&appid=${WEATHER_API_KEY}`;
-    console.log('city', city, 'url', url);
     axios.get(url)
       .then((response) => {
-        console.log(response);
         dispatch({
           type: GET_CITY_FORECAST_SUCCESS,
-//           searchHistory: Object.push(city),
           payload: {
             name: response.data.city.name,
             country: response.data.city.country,
             forecast: Object.keys(response.data.list).map(function(key) {
-              return { 
-                temp: this[key].temp.day.toFixed(0),
-                humidity: this[key].humidity,
-                windSpeed: this[key].speed.toFixed(0),
-                windDirection: this[key].deg,
-                mainDescription: this[key].weather[0].main,
+              return {
+                dateTime: (this[key].dt * 1000),
                 description: this[key].weather[0].description,
-                dateTime: (this[key].dt * 1000)
+                temp: this[key].temp.day.toFixed(0),
+                lowTemp: this[key].temp.min.toFixed(0),
+                highTemp: this[key].temp.max.toFixed(0),
+                humidity: this[key].humidity,
+                mainDescription: this[key].weather[0].main,
+                pressure: this[key].pressure,
+                windSpeed: this[key].speed.toFixed(0),
+                windDirection: this[key].deg
               }
             }, response.data.list),
           },
@@ -57,14 +62,26 @@ export const getCityForecast = (city, currentKey) => {
     });
   };
 };
+
+export const SET_SELECTED_CITY = 'SET_SELECTED_CITY';
+
+export const setSelectedDay = (day) =>{
+  return (dispatch) => dispatch({type: SET_SELECTED_CITY, payload: day});
+}
   
 const initialState = {
+  searchHistory: [],
   selectedCity: false,
   selectedDay: false
 };
 
 const weather = (state = initialState, action) => {
   switch(action.type) {
+    case SET_SEARCH_HISTORY:
+      return {
+        ...state,
+        searchHistory: action.payload
+      }
     case GET_CITY_FORECAST_SUCCESS:
       return {
         ...state,

@@ -8,8 +8,11 @@ import {
   View,
 } from 'react-native';
 import { actions } from 'react-native-navigation-redux-helpers';
+import update from 'immutability-helper';
 import * as routes from '../ducks/routes';
-import { getCityForecast } from '../ducks/weather';
+import { 
+  setSearchHistory,
+  getCityForecast } from '../ducks/weather';
 import Style from '../lib/style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -19,15 +22,14 @@ class SearchPage extends React.Component {
   constructor(props) {
     super(props);
     
-    this.state = { 
+    this.state = {
       search: { city: '' }
     };
   }
-  
-
 
   getForecast() {
     return () => {
+      this.props.dispatch(setSearchHistory(this.state.search.city, this.props.weather.searchHistory));
       this.props.dispatch(getCityForecast(this.state.search.city, this.props.navigation.key));
     };
   }
