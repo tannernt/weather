@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   Image,
+//   Picker,
+  ScrollView,
   TouchableHighlight,
   Text,
   TextInput,
@@ -9,10 +11,9 @@ import {
 } from 'react-native';
 import { actions } from 'react-native-navigation-redux-helpers';
 import update from 'immutability-helper';
+// import ScrollPicker from 'react-native-picker-scrollview';
 import * as routes from '../ducks/routes';
-import { 
-  setSearchHistory,
-  getCityForecast } from '../ducks/weather';
+import { setSearchHistory, getCityForecast } from '../ducks/weather';
 import Style from '../lib/style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -72,6 +73,7 @@ class SearchPage extends React.Component {
             </View>
           </View>
           <View style={Style.searchBottom}>
+             
           </View>
         </Image>
       </View>

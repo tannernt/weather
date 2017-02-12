@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {
   Image,
   ListView,
+  StyleSheet,
   TouchableHighlight,
   Text,
   View,
@@ -19,12 +20,56 @@ let data = new ListView.DataSource({
   rowHasChanged: (row1, row2) => row1 != row2,
 });
 
+let styles = StyleSheet.create({
+  detailsWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  forecastDetailsWrapper: {
+    flex: 1
+  },
+  forecastDetails: {
+    fontSize: 16,
+    fontWeight: '200',
+    padding: 5
+  },
+  temp: {
+    fontSize: 100,
+    fontWeight: '200'
+  },
+});
+
 class ForecastDayPage extends React.Component {
 
   getWeather() {
     return () => {
       this.props.dispatch(getCityWeather(this.props.search.city));
     };
+  }
+  
+  getWeatherIcon(description) {
+    switch(description) {
+      case 'Clear':
+        return 'weather-sunny';
+      case 'Clouds':
+        return 'weather-cloudy';
+      case 'Drizzle':
+        return 'weather-pouring';
+      case 'Rain':
+        return 'weather-rainy';
+      case 'Rhunderstorm':
+        return 'weather-ligthning-rainy';
+      case 'Snow':
+        return 'weather-snowy';
+      case 'Atmosphere':
+        return 'weather-fog';
+      case 'Extreme':
+      case 'Additional':
+        return 'weather-windy';
+      default:
+        return 'weather-sunny';
+    }
   }
   
   getCardinal(angle) {
@@ -63,15 +108,35 @@ class ForecastDayPage extends React.Component {
           <View style={Style.currentWeather}>
           <Text style={Style.city}>{selectedCity.name}, {selectedCity.country}</Text>
           <Text style={Style.weatherDescription}>{selectedCity.forecast[0].description}</Text>
-            <Text style={Style.temp}>
+            <Text style={styles.temp}>
               {selectedCity.forecast[0].temp} <Icon name='temperature-fahrenheit' 
                     size={100}
                     color="#2D2D2D">
               </Icon>
             </Text>
           </View>
-          <Text>Humidity: {selectedCity.forecast[0].humidity}%</Text>
-          <Text>Wind: {selectedCity.forecast[0].windSpeed} mph {this.getCardinal(selectedCity.forecast[0].windDirection)}</Text>
+
+          
+        </View>
+      );
+    }
+  }
+  
+  renderWeatherDetail() {
+    const { selectedCity } = this.props.weather;
+    
+    if (this.props.weather.selectedCity) {
+      return (
+        <View style={Style.bottom}>
+          <View style={styles.detailsWrapper}>
+            <View style={styles.forecastDetailsWrapper}>
+              <Text style={styles.forecastDetails}>Low Temp: {selectedCity.forecast[0].lowTemp}</Text>
+              <Text style={styles.forecastDetails}>High Temp: {selectedCity.forecast[0].highTemp}</Text>
+              <Text style={styles.forecastDetails}>Humidity: {selectedCity.forecast[0].humidity}%</Text>
+              <Text style={styles.forecastDetails}>Wind: {this.getCardinal(selectedCity.forecast[0].windDirection)} {selectedCity.forecast[0].windSpeed} mph</Text>
+              <Text style={styles.forecastDetails}>Pressure: {selectedCity.forecast[0].pressure} hPa</Text>
+            </View>
+          </View>
         </View>
       );
     }
@@ -84,7 +149,8 @@ class ForecastDayPage extends React.Component {
           style={Style.backdrop}
           source={require('../img/clouds.png')}>
           <Header/>
-            {this.renderWeather()}
+          {this.renderWeather()}
+          {this.renderWeatherDetail()}
         </Image>
       </View>
     );
