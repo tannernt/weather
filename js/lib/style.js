@@ -71,10 +71,10 @@ var Style = StyleSheet.create({
     color: 'white'
   },
   top: {
-    flex: 2,
+    flex: 4,
   },
   bottom: {
-    flex: 2
+    flex: 3,
   },
   currentWeather: {
     alignSelf: 'center',
@@ -82,7 +82,7 @@ var Style = StyleSheet.create({
     alignItems: 'center'
   },
   city: {
-    paddingTop: 30,
+    paddingTop: 10,
     fontSize: 40,
     fontWeight: '300'
   },

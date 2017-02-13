@@ -23,6 +23,11 @@ let data = new ListView.DataSource({
 });
 
 let styles = StyleSheet.create({
+  weatherUnitWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
+  },
   forecastSortWrapper: {
     flex: 1,
     flexDirection: 'row',
@@ -121,6 +126,21 @@ class ForecastPage extends React.Component {
     if (this.props.weather.selectedCity) {
       return (
         <View style={Style.top}>
+          <View style={styles.weatherUnitWrapper}>
+            <TouchableHighlight>
+              <Icon name='temperature-fahrenheit' 
+                size={24}
+                color="#2D2D2D">
+              </Icon>
+            </TouchableHighlight>
+            <Text>/</Text>
+            <TouchableHighlight>
+              <Icon name='temperature-celsius' 
+                size={24}
+                color="#2D2D2D">
+              </Icon>
+            </TouchableHighlight>
+          </View>
           <View style={Style.currentWeather}>
           <Text style={Style.city}>{selectedCity.name}, {selectedCity.country}</Text>
           <Text style={Style.weatherDescription}>{selectedCity.currentForecast.description}</Text>
@@ -172,8 +192,9 @@ class ForecastPage extends React.Component {
                   </Icon>
                   <Text style={Style.forecastDayDetails}>{data.temp}</Text><Icon name='temperature-fahrenheit' 
                     size={18}
-                    color="#2D2D2D"> / <Text style={Style.forecastDayDetails}>{data.humidity}%</Text>
-              </Icon>
+                    color="#2D2D2D">
+                  </Icon>
+                  <Text> / </Text><Text style={Style.forecastDayDetails}>{data.humidity}%</Text>
                 </View>
               </TouchableHighlight>}
           />
