@@ -1,5 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
+import { sortBy } from 'lodash';
 
 import * as routes from '../ducks/routes';
 import { navigateTo } from './navigation';
@@ -33,6 +34,18 @@ export const getCityForecast = (city, currentKey) => {
           payload: {
             name: response.data.city.name,
             country: response.data.city.country,
+            currentForecast: {
+              dateTime: (response.data.list[0].dt * 1000),
+              description: response.data.list[0].weather[0].description,
+              temp: response.data.list[0].temp.day.toFixed(0),
+              lowTemp: response.data.list[0].temp.min.toFixed(0),
+              highTemp: response.data.list[0].temp.max.toFixed(0),
+              humidity: response.data.list[0].humidity,
+              mainDescription: response.data.list[0].weather[0].main,
+              pressure: response.data.list[0].pressure,
+              windSpeed: response.data.list[0].speed.toFixed(0),
+              windDirection: response.data.list[0].deg
+            },
             forecast: Object.keys(response.data.list).map(function(key) {
               return {
                 dateTime: (this[key].dt * 1000),
@@ -63,6 +76,22 @@ export const getCityForecast = (city, currentKey) => {
   };
 };
 
+export const SORT_FORECAST = 'SORT_FORECAST';
+
+export const sortForecast = (orderBy, currentForecast) =>{
+  console.log(currentForecast);
+  const newForecastOrder = sortBy(currentForecast.forecast, orderBy);
+  return (dispatch) => dispatch({
+    type: SORT_FORECAST, 
+    payload: {
+      name: currentForecast.name,
+      country: currentForecast.country,
+      currentForecast: currentForecast.currentForecast,
+      forecast: newForecastOrder
+    },
+  });
+}
+
 export const SET_SELECTED_CITY = 'SET_SELECTED_CITY';
 
 export const setSelectedDay = (day) =>{
@@ -86,12 +115,17 @@ const weather = (state = initialState, action) => {
       return {
         ...state,
         selectedCity: action.payload,
-        };
+      }
     case GET_CITY_FORECAST_ERROR:
       return {
         ...state,
         error: action.payload
-        };
+      }
+    case SORT_FORECAST:
+      return {
+        ...state,
+        selectedCity: action.payload
+      }
     case SET_SELECTED_CITY:
       return {
         ...state,

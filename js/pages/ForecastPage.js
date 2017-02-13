@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import * as routes from '../ducks/routes';
-import { getCityWeather, setSelectedDay } from '../ducks/weather';
+import { getCityWeather, setSelectedDay, sortForecast } from '../ducks/weather';
 import { navigateTo } from '../ducks/navigation';
 import Header from '../Header';
 import Style from '../lib/style';
@@ -33,6 +33,15 @@ let styles = StyleSheet.create({
     padding: 2,
     borderWidth: 1
   },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  innerContainer: {
+    borderRadius: 10,
+    alignItems: 'center',
+  },
 });
 
 class ForecastPage extends React.Component {
@@ -47,6 +56,12 @@ class ForecastPage extends React.Component {
   getWeather() {
     return () => {
       this.props.dispatch(getCityWeather(this.props.search.city));
+    };
+  }
+  
+  sortForecast(orderBy) {
+    return () => {
+      this.props.dispatch(sortForecast(orderBy, this.props.weather.selectedCity));
     };
   }
   
@@ -108,22 +123,25 @@ class ForecastPage extends React.Component {
         <View style={Style.top}>
           <View style={Style.currentWeather}>
           <Text style={Style.city}>{selectedCity.name}, {selectedCity.country}</Text>
-          <Text style={Style.weatherDescription}>{selectedCity.forecast[0].description}</Text>
+          <Text style={Style.weatherDescription}>{selectedCity.currentForecast.description}</Text>
             <Text style={Style.temp}>
-              {selectedCity.forecast[0].temp} <Icon name='temperature-fahrenheit' 
+              {selectedCity.currentForecast.temp} <Icon name='temperature-fahrenheit' 
                     size={100}
                     color="#2D2D2D">
               </Icon>
             </Text>
           </View>
           <View style={styles.forecastSortWrapper}>
-            <TouchableHighlight>
+            <TouchableHighlight
+              onPress={this.sortForecast('dateTime')}>
               <Text style={styles.forecastSort}>Day</Text>
             </TouchableHighlight>
-            <TouchableHighlight>
+            <TouchableHighlight
+              onPress={this.sortForecast('temp')}>
               <Text style={styles.forecastSort}>Temp</Text>
             </TouchableHighlight>
-            <TouchableHighlight>
+            <TouchableHighlight
+              onPress={this.sortForecast('humidity')}>
               <Text style={styles.forecastSort}>Hum</Text>
             </TouchableHighlight>
           </View>

@@ -98,7 +98,6 @@ class ForecastDayPage extends React.Component {
     return "N";
   };
 
-
   renderWeather() {
     const { selectedCity } = this.props.weather;
     const selectedDay = this.props.weather.selectedDay;
