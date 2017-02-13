@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {
   Image,
   ListView,
+  StyleSheet,
   TouchableHighlight,
   Text,
   View,
@@ -19,6 +20,19 @@ import moment from 'moment';
 
 let data = new ListView.DataSource({
   rowHasChanged: (row1, row2) => row1 != row2,
+});
+
+let styles = StyleSheet.create({
+  forecastSortWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  forecastSort: {
+    padding: 2,
+    borderWidth: 1
+  },
 });
 
 class ForecastPage extends React.Component {
@@ -101,6 +115,17 @@ class ForecastPage extends React.Component {
                     color="#2D2D2D">
               </Icon>
             </Text>
+          </View>
+          <View style={styles.forecastSortWrapper}>
+            <TouchableHighlight>
+              <Text style={styles.forecastSort}>Day</Text>
+            </TouchableHighlight>
+            <TouchableHighlight>
+              <Text style={styles.forecastSort}>Temp</Text>
+            </TouchableHighlight>
+            <TouchableHighlight>
+              <Text style={styles.forecastSort}>Hum</Text>
+            </TouchableHighlight>
           </View>
         </View>
       );

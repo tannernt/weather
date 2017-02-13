@@ -101,15 +101,16 @@ class ForecastDayPage extends React.Component {
 
   renderWeather() {
     const { selectedCity } = this.props.weather;
-    
-    if (this.props.weather.selectedCity) {
+    const selectedDay = this.props.weather.selectedDay;
+
+    if (this.props.weather.selectedCity && selectedDay) {
       return (
         <View style={Style.top}>
           <View style={Style.currentWeather}>
           <Text style={Style.city}>{selectedCity.name}, {selectedCity.country}</Text>
-          <Text style={Style.weatherDescription}>{selectedCity.forecast[0].description}</Text>
+          <Text style={Style.weatherDescription}>{selectedDay.description}</Text>
             <Text style={styles.temp}>
-              {selectedCity.forecast[0].temp} <Icon name='temperature-fahrenheit' 
+              {selectedDay.temp} <Icon name='temperature-fahrenheit' 
                     size={100}
                     color="#2D2D2D">
               </Icon>
@@ -123,18 +124,26 @@ class ForecastDayPage extends React.Component {
   }
   
   renderWeatherDetail() {
-    const { selectedCity } = this.props.weather;
-    
-    if (this.props.weather.selectedCity) {
+    const selectedDay = this.props.weather.selectedDay;
+
+    if (selectedDay) {
       return (
         <View style={Style.bottom}>
           <View style={styles.detailsWrapper}>
             <View style={styles.forecastDetailsWrapper}>
-              <Text style={styles.forecastDetails}>Low Temp: {selectedCity.forecast[0].lowTemp}</Text>
-              <Text style={styles.forecastDetails}>High Temp: {selectedCity.forecast[0].highTemp}</Text>
-              <Text style={styles.forecastDetails}>Humidity: {selectedCity.forecast[0].humidity}%</Text>
-              <Text style={styles.forecastDetails}>Wind: {this.getCardinal(selectedCity.forecast[0].windDirection)} {selectedCity.forecast[0].windSpeed} mph</Text>
-              <Text style={styles.forecastDetails}>Pressure: {selectedCity.forecast[0].pressure} hPa</Text>
+              <Text style={styles.forecastDetails}>Low Temp: {selectedDay.lowTemp} <Icon name='temperature-fahrenheit' 
+                    size={20}
+                    color="#2D2D2D">
+                </Icon>
+              </Text>
+              <Text style={styles.forecastDetails}>High Temp: {selectedDay.highTemp} <Icon name='temperature-fahrenheit' 
+                    size={20}
+                    color="#2D2D2D">
+                </Icon>
+              </Text>
+              <Text style={styles.forecastDetails}>Humidity: {selectedDay.humidity}%</Text>
+              <Text style={styles.forecastDetails}>Wind: {this.getCardinal(selectedDay.windDirection)} {selectedDay.windSpeed} mph</Text>
+              <Text style={styles.forecastDetails}>Pressure: {selectedDay.pressure} hPa</Text>
             </View>
           </View>
         </View>
