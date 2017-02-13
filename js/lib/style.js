@@ -97,6 +97,7 @@ var Style = StyleSheet.create({
   forecastRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    alignItems: 'center',
     height: 55,
     padding: 10,
     borderTopWidth: 1,
@@ -104,7 +105,7 @@ var Style = StyleSheet.create({
   },
   forecastDay: {
     flex: 1,
-    fontSize: 20,
+    fontSize: 18,
     color: '#777777',
     justifyContent: 'space-around',
   },
@@ -113,7 +114,7 @@ var Style = StyleSheet.create({
     justifyContent: 'space-around'
   },
   forecastDayDetails: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '300',
     color: '#000000',
     justifyContent: 'flex-end'

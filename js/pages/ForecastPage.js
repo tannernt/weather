@@ -27,11 +27,11 @@ let styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: 5
   },
   forecastSort: {
-    padding: 2,
-    borderWidth: 1
+    padding: 2
   },
   container: {
     flex: 1,
@@ -136,10 +136,12 @@ class ForecastPage extends React.Component {
               onPress={this.sortForecast('dateTime')}>
               <Text style={styles.forecastSort}>Day</Text>
             </TouchableHighlight>
+            <Text>|</Text>
             <TouchableHighlight
               onPress={this.sortForecast('temp')}>
               <Text style={styles.forecastSort}>Temp</Text>
             </TouchableHighlight>
+            <Text>|</Text>
             <TouchableHighlight
               onPress={this.sortForecast('humidity')}>
               <Text style={styles.forecastSort}>Hum</Text>
@@ -168,7 +170,10 @@ class ForecastPage extends React.Component {
                     size={30}
                     color="#2D2D2D">
                   </Icon>
-                  <Text style={Style.forecastDayDetails}>{data.temp}</Text>
+                  <Text style={Style.forecastDayDetails}>{data.temp}</Text><Icon name='temperature-fahrenheit' 
+                    size={18}
+                    color="#2D2D2D"> / <Text style={Style.forecastDayDetails}>{data.humidity}%</Text>
+              </Icon>
                 </View>
               </TouchableHighlight>}
           />
