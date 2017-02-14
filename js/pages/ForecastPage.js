@@ -23,6 +23,34 @@ let data = new ListView.DataSource({
 });
 
 let styles = StyleSheet.create({
+  forecastRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    height: 55,
+    padding: 10,
+    borderTopWidth: 1,
+    borderColor: '#A9A9A9'
+  },
+  forecastDay: {
+    flex: 1,
+    fontSize: 18,
+    color: '#2D2D2D',
+    justifyContent: 'space-around',
+  },
+  forecastIcon: {
+    flex: 1,
+    justifyContent: 'space-around'
+  },
+  forecastDayDetails: {
+    fontSize: 18,
+    fontWeight: '300',
+    color: '#2D2D2D',
+    justifyContent: 'flex-end'
+  },
+  tempIcon: {
+    paddingBottom: 40
+  },
   weatherUnitWrapper: {
     flex: 1,
     flexDirection: 'row',
@@ -146,7 +174,8 @@ class ForecastPage extends React.Component {
           <Text style={Style.weatherDescription}>{selectedCity.currentForecast.description}</Text>
             <Text style={Style.temp}>
               {selectedCity.currentForecast.temp} <Icon name='temperature-fahrenheit' 
-                    size={100}
+                    size={60}
+                    style={styles.tempIcon}
                     color="#2D2D2D">
               </Icon>
             </Text>
@@ -183,18 +212,18 @@ class ForecastPage extends React.Component {
             dataSource={data.cloneWithRows(selectedCity.forecast)}
             renderRow={ (data) => <TouchableHighlight
             onPress={this.gotoPage(data)}>
-                <View style={Style.forecastRow} >
-                  <Text style={Style.forecastDay}>{moment.utc(data.dateTime).format('dddd')}</Text>
+                <View style={styles.forecastRow} >
+                  <Text style={styles.forecastDay}>{moment.utc(data.dateTime).format('dddd')}</Text>
                   <Icon name={this.getWeatherIcon(data.mainDescription)}
-                    style={Style.forecastIcon}
+                    style={styles.forecastIcon}
                     size={30}
                     color="#2D2D2D">
                   </Icon>
-                  <Text style={Style.forecastDayDetails}>{data.temp}</Text><Icon name='temperature-fahrenheit' 
+                  <Text style={styles.forecastDayDetails}>{data.temp}</Text><Icon name='temperature-fahrenheit' 
                     size={18}
                     color="#2D2D2D">
                   </Icon>
-                  <Text> / </Text><Text style={Style.forecastDayDetails}>{data.humidity}%</Text>
+                  <Text> / </Text><Text style={styles.forecastDayDetails}>{data.humidity}%</Text>
                 </View>
               </TouchableHighlight>}
           />

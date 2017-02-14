@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
+  StyleSheet,
   TouchableHighlight,
   Text,
   View,
@@ -15,6 +16,21 @@ const {
   popRoute,
 } = actions;
 
+
+let styles = StyleSheet.create({
+  header: {
+    borderBottomWidth: 0.5,
+    paddingTop: 10,
+    paddingLeft: 5,
+    paddingBottom: 5,
+    opacity: 0.4,
+    backgroundColor: '#F9F9F9'
+  },
+  navBack: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+});
 
 class Header extends React.Component {
 
@@ -31,12 +47,12 @@ class Header extends React.Component {
   
   render() {
     return (
-      <View style={Style.header}>
-        <Text style={Style.back}>{this.props.name}</Text>
+      <View style={styles.header}>
+        <Text>{this.props.name}</Text>
         <TouchableHighlight
           onPress={this.navigateBack()}
         >
-          <View style={Style.navBack}>
+          <View style={styles.navBack}>
             <Icon name='code-less-than' 
                 size={26}
                 color="#2D2D2D">

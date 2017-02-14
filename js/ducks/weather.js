@@ -8,12 +8,12 @@ import update from 'immutability-helper';
 
 export const SET_SEARCH_HISTORY = 'SET_SEARCH_HISTORY';
 
-export const setSearchHistory = (search, currentHistory) =>{
+export const setSearchHistory = (search, currentSearchHistory) =>{
   const newSearch = [search];
-  const newSearchHistory = update(currentHistory, {$push: newSearch});
+  const searchHistory = (currentSearchHistory.indexOf(search) == -1 && search != '') ? update(currentSearchHistory, {$push: newSearch}) : currentSearchHistory;
   return (dispatch) => dispatch({
     type: SET_SEARCH_HISTORY, 
-    payload: newSearchHistory,
+    payload: searchHistory,
   });
 }
 
@@ -67,7 +67,6 @@ export const getCityForecast = (city, currentKey) => {
         dispatch(navigateTo(routes.ROUTE_CITY_FORECAST, currentKey));
     })
     .catch((error) => {
-      console.error(error);
       dispatch({
         type: GET_CITY_FORECAST_ERROR,
         payload: error,
