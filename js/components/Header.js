@@ -7,9 +7,9 @@ import {
   View,
 } from 'react-native';
 import { actions } from 'react-native-navigation-redux-helpers';
-import * as routes from './ducks/routes';
-import { getCityForecast } from './ducks/weather';
-import Style from './lib/style';
+import * as routes from '../ducks/routes';
+import { getCityForecast } from '../ducks/weather';
+import Style from '../lib/style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const {

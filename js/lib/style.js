@@ -48,6 +48,9 @@ var Style = StyleSheet.create({
   temp: {
     fontSize: 100,
     fontWeight: '400'
+  },
+  tempIcon: {
+    textAlignVertical: 'top'
   }
 });
 

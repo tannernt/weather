@@ -11,7 +11,7 @@ import {
 import * as routes from '../ducks/routes';
 import { getCityWeather, setSelectedDay, sortForecast } from '../ducks/weather';
 import { navigateTo } from '../ducks/navigation';
-import Header from '../Header';
+import Header from '../components/Header';
 import Style from '../lib/style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
@@ -44,12 +44,9 @@ let styles = StyleSheet.create({
   },
   forecastDayDetails: {
     fontSize: 18,
-    fontWeight: '300',
+    fontWeight: '500',
     color: '#2D2D2D',
     justifyContent: 'flex-end'
-  },
-  tempIcon: {
-    paddingBottom: 40
   },
   weatherUnitWrapper: {
     flex: 1,
@@ -175,7 +172,7 @@ class ForecastPage extends React.Component {
             <Text style={Style.temp}>
               {selectedCity.currentForecast.temp} <Icon name='temperature-fahrenheit' 
                     size={60}
-                    style={styles.tempIcon}
+                    style={Style.tempIcon}
                     color="#2D2D2D">
               </Icon>
             </Text>
@@ -216,11 +213,11 @@ class ForecastPage extends React.Component {
                   <Text style={styles.forecastDay}>{moment.utc(data.dateTime).format('dddd')}</Text>
                   <Icon name={this.getWeatherIcon(data.mainDescription)}
                     style={styles.forecastIcon}
-                    size={30}
+                    size={24}
                     color="#2D2D2D">
                   </Icon>
                   <Text style={styles.forecastDayDetails}>{data.temp}</Text><Icon name='temperature-fahrenheit' 
-                    size={18}
+                    size={14}
                     color="#2D2D2D">
                   </Icon>
                   <Text> / </Text><Text style={styles.forecastDayDetails}>{data.humidity}%</Text>

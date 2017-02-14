@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import * as routes from '../ducks/routes';
 import { getCityWeather } from '../ducks/weather';
-import Header from '../Header';
+import Header from '../components/Header';
 import Style from '../lib/style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
@@ -30,13 +30,9 @@ let styles = StyleSheet.create({
     flex: 1
   },
   forecastDetails: {
-    fontSize: 16,
-    fontWeight: '200',
+    fontSize: 18,
+    fontWeight: '400',
     padding: 5
-  },
-  temp: {
-    fontSize: 100,
-    fontWeight: '200'
   },
 });
 
@@ -108,12 +104,19 @@ class ForecastDayPage extends React.Component {
           <View style={Style.currentWeather}>
           <Text style={Style.city}>{selectedCity.name}, {selectedCity.country}</Text>
           <Text style={Style.weatherDescription}>{selectedDay.description}</Text>
-            <Text style={styles.temp}>
-              {selectedDay.temp} <Icon name='temperature-fahrenheit' 
+          <Text style={Style.temp}>
+            <Icon name={this.getWeatherIcon(selectedDay.mainDescription)}
+                    style={styles.forecastIcon}
                     size={100}
                     color="#2D2D2D">
-              </Icon>
-            </Text>
+            </Icon>
+            {selectedDay.temp}
+            <Icon name='temperature-fahrenheit' 
+                  size={60}
+                  style={Style.tempIcon}
+                  color="#2D2D2D">
+            </Icon>
+          </Text>
           </View>
 
           
@@ -131,12 +134,12 @@ class ForecastDayPage extends React.Component {
           <View style={styles.detailsWrapper}>
             <View style={styles.forecastDetailsWrapper}>
               <Text style={styles.forecastDetails}>Low Temp: {selectedDay.lowTemp} <Icon name='temperature-fahrenheit' 
-                    size={20}
+                    size={16}
                     color="#2D2D2D">
                 </Icon>
               </Text>
               <Text style={styles.forecastDetails}>High Temp: {selectedDay.highTemp} <Icon name='temperature-fahrenheit' 
-                    size={20}
+                    size={16}
                     color="#2D2D2D">
                 </Icon>
               </Text>
