@@ -60,10 +60,12 @@ let styles = StyleSheet.create({
   },
   searchTitle: {
     fontSize: 18,
-    fontWeight: '600'
+    fontWeight: '600',
+    opacity: 0.6,
+    backgroundColor: '#F9F9F9'
   },
   searchHistoryItem: {
-    color: '#FFF'
+    color: '#222222'
   }
 });
 
